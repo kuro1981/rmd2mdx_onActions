@@ -2,6 +2,9 @@ on:
   push:
     paths:
       - '**.Rmd'
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 name: Render Rmarkdown files
 
