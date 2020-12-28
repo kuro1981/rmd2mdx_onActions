@@ -25,6 +25,7 @@ jobs:
           install.packages("remotes")
           # remotes::install_local(".")
           remotes::install_cran("rmarkdown")
+          remotes::install_cran("tidyverse")
           remotes::install_github("kuro1981/writeMDX")
         shell: Rscript {0}
       - name: Render Rmarkdown files
