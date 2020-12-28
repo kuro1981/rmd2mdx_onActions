@@ -25,16 +25,18 @@ jobs:
           install.packages("remotes")
           # remotes::install_local(".")
           remotes::install_cran("rmarkdown")
-          remotes::install_github("RobertMyles/writeMDX")
+          remotes::install_github("kuro1981/writeMDX")
         shell: Rscript {0}
       - name: Render Rmarkdown files
         run: |
           RMD_PATH=($(git diff-tree --no-commit-id --name-only -r HEAD | grep '[.]Rmd$'))
-          Rscript -e 'for (file in commandArgs(TRUE)) rmarkdown::render(file)' ${RMD_PATH[*]}
+          Rscript -e 'for (file in commandArgs(TRUE)) writeMDX::writeMDX(file)' ${RMD_PATH[*]}
+          # Rscript -e 'for (file in commandArgs(TRUE)) rmarkdown::render(file)' ${RMD_PATH[*]}
       - name: Commit results
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          git commit ${RMD_PATH[*]/.Rmd/.md} -m 'Re-build Rmarkdown files' || echo "No changes to commit"
+          git add .
+          git commit ${RMD_PATH[*]/.Rmd/.md/mdx} -m 'Re-build Rmarkdown files' || echo "No changes to commit"
           git push origin || echo "No changes to commit"
 
