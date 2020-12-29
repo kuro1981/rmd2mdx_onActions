@@ -30,10 +30,10 @@ print(head(mtcars))
 ```
 
 And Python: 
-```{python}
+#```{python}
 x = 3
 print(x)
-```
+#```
 
 aaa
 bbb
