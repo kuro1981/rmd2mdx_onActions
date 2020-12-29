@@ -22,18 +22,19 @@ It also has equations $y_{ij} = \alpha_j * beta_i$
 $$y_{ij} = \alpha_j * beta_i$$
 
 And it has code. For R:
-#```{r}
+```{r}
 x <- 5
 print(x)
 
 print(head(mtcars))
-#```
+```
 
 And Python: 
-#```{python}
+```{python}
 x = 3
 print(x)
-#```
+```
+
 
 aaa
 bbb
