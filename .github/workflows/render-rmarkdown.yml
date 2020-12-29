@@ -20,24 +20,14 @@ jobs:
           fetch-depth: 2 # This is important to set for `git diff-tree` to work below
       - uses: r-lib/actions/setup-r@v1
       - uses: r-lib/actions/setup-pandoc@v1
-      - name: Install rmarkdown, remotes, writeMDX, reticulate and the local package
-        run: |
-          install.packages('renv')
-          renv::restore(confirm = FALSE)
-          # install.packages("remotes")
-          # remotes::install_local(".")
-          # remotes::install_cran("rmarkdown")
-          # remotes::install_cran("tidyverse")
-          # remotes::install_cran("reticulate")
-          # remotes::install_github("kuro1981/writeMDX")
-        shell: Rscript {0}
-      - uses: actions/cache@v2
-        if: startsWith(runner.os, 'Linux')
-        with:
-          path: ~/.local/share/renv
-          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-renv-
+      
+      # - uses: actions/cache@v2
+      #   if: startsWith(runner.os, 'Linux')
+      #   with:
+      #     path: ~/.local/share/renv
+      #     key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-renv-
       - uses: actions/cache@v2
         if: startsWith(runner.os, 'macOS')
         with:
@@ -45,19 +35,25 @@ jobs:
           key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
           restore-keys: |
             ${{ runner.os }}-renv-
-      - uses: actions/cache@v2
-        if: startsWith(runner.os, 'Windows')
-        with:
-          path: ~\AppData\Local\renv
-          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-renv-
+      # - uses: actions/cache@v2
+      #   if: startsWith(runner.os, 'Windows')
+      #   with:
+      #     path: ~\AppData\Local\renv
+      #     key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-renv-
+      - name: Install renv package
+        run: |
+          install.packages('renv')
+          renv::restore(confirm = FALSE)
+        shell: Rscript {0}
 
       - name: Render Rmarkdown files
         run: |
           RMD_PATH=($(git diff-tree --no-commit-id --name-only -r HEAD | grep '[.]Rmd$'))
           Rscript -e 'for (file in commandArgs(TRUE)) writeMDX::writeMDX(file)' ${RMD_PATH[*]}
           # Rscript -e 'for (file in commandArgs(TRUE)) rmarkdown::render(file)' ${RMD_PATH[*]}
+
       - name: Commit results
         run: |
           git config --local user.email "actions@github.com"
