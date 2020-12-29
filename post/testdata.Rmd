@@ -2,6 +2,7 @@
 title: "test data"
 output: html_document
 date: "2/29/2020"
+featuredImage: "image/PAKU0937.jpg"
 ---
 
 ```{r setup, include=FALSE}
