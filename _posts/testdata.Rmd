@@ -35,7 +35,6 @@ x = 3
 print(x)
 ```
 
-
 aaa
 bbb
 っっｃ
