@@ -1,4 +1,3 @@
 ^renv$
 ^renv\.lock$
 ^\.github$
-^require_libraries.R
